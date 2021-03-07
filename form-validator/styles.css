@@ -3,6 +3,15 @@
 :root {
   --success-color: #2ecc71;
   --error-color: #e74c3c;
+  --bg-color: white;
+  --font-color: black;
+  --label-color: #777;
+}
+
+[data-theme='dark'] {
+  --bg-color: #2d3436;
+  --font-color: white;
+  --label-color: white;
 }
 
 * {
@@ -21,11 +30,72 @@ body {
 }
 
 .container {
-  background-color: #fff;
+  background-color: var(--bg-color);
+  color: var(--font-color);
   padding: 10px;
-  border-radius: 5px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-  width: 400px;
+  width: 100%;
+  transition: background 0.3s ease-in-out;
+  transition: color 0.3s ease-in-out;
+}
+
+@media (min-width: 512px) {
+  .container {
+    width: calc(100% - 200px);
+    border-radius: 5px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    width: 400px;
+    border-radius: 5px;
+  }
+}
+
+.toggle {
+  display: inline-block;
+  width: 50px;
+  height: 25px;
+  background-color: #3498db;
+  border-radius: 50px;
+  position: relative;
+  cursor: pointer;
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.4);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.toggle:hover {
+  box-shadow: none;
+}
+
+.toggle::before {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50px;
+  background-color: white;
+  transition: transform 0.3s ease-in-out;
+}
+
+.mode:checked + .toggle {
+  background-color: grey;
+  box-shadow: 0px 1px 5px white;
+}
+
+.mode:checked + .toggle::before {
+  transform: translate(25px, 0px);
+}
+
+.mode:checked + .toggle:hover {
+  box-shadow: none;
+}
+
+.mode {
+  display: none;
 }
 
 h2 {
@@ -45,8 +115,9 @@ h2 {
 
 .form-control label {
   display: block;
-  color: #777;
+  color: var(--label-color);
   margin-bottom: 10px;
+  transition: color 0.3s ease-in-out;
 }
 
 .form-control input {
@@ -102,4 +173,14 @@ h2 {
   font-family: 'Nanum Gothic';
   margin-top: 20px;
   cursor: pointer;
+}
+
+@media (prefers-color-scheme: dark) {
+  .container {
+    background-color: black;
+    color: white;
+  }
+  .form-control label {
+    color: white;
+  }
 }

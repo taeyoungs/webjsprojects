@@ -3,6 +3,8 @@ const username = document.getElementById('username');
 const email = document.getElementById('email');
 const password = document.getElementById('password');
 const password2 = document.getElementById('password2');
+const mode = document.getElementById('mode');
+const toggle = document.getElementById('toggle');
 
 function showError(input, message) {
   const formControl = input.parentElement;
@@ -60,5 +62,32 @@ form.addEventListener('submit', (e) => {
   checkLength(username, 3, 15);
   checkLength(password, 6, 25);
   checkEmail(email);
-  checkPasswordsMatch(password, password2);
+  if (password.value.length > 0) {
+    checkPasswordsMatch(password, password2);
+  }
+});
+
+if (localStorage.getItem('data-theme') === 'dark') {
+  mode.checked = true;
+} else if (!window.matchMedia) {
+  console.log('window matchMedia does not supported');
+} else if (window.matchMedia('(prefers-color-theme: dark)').matches) {
+  mode.checked = true;
+}
+
+if (mode.checked) {
+  document.documentElement.setAttribute('data-theme', 'dark');
+} else {
+  document.documentElement.setAttribute('data-theme', 'light');
+}
+
+mode.addEventListener('click', (e) => {
+  e.target.checked = e.target.checked ? true : false;
+  if (e.target.checked) {
+    localStorage.setItem('data-theme', 'dark');
+    document.documentElement.setAttribute('data-theme', 'dark');
+  } else {
+    localStorage.setItem('data-theme', 'light');
+    document.documentElement.setAttribute('data-theme', 'light');
+  }
 });
