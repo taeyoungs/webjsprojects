@@ -16,14 +16,18 @@ function showSuccess(input) {
   formControl.className = 'form-control success';
 }
 
-function isValidEmail(email) {
+function checkEmail(input) {
   const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(String(email).toLowerCase());
+  if (re.test(input.value)) {
+    showSuccess(input);
+  } else {
+    showError(input, '이메일 형식이 올바르지 않습니다.');
+  }
 }
 
 function checkRequired(inputs) {
   inputs.forEach((input) => {
-    if (input.value === '') {
+    if (input.value.trim() === '') {
       showError(input, `${input.dataset.label}은 필수 항목입니다.`);
     } else {
       showSuccess(input);
@@ -31,8 +35,30 @@ function checkRequired(inputs) {
   });
 }
 
+function checkLength(input, min, max) {
+  if (input.value.length < min) {
+    showError(input, `${input.dataset.label}은 최소 ${min}글자여야 합니다.`);
+  } else if (input.value.length > max) {
+    showError(input, `${input.dataset.label}은 최대 ${min}글자여야 합니다.`);
+  } else {
+    showSuccess(input);
+  }
+}
+
+function checkPasswordsMatch(input1, input2) {
+  if (input1.value !== input2.value) {
+    showError(input2, '비밀번호가 일치하지 않습니다.');
+  } else {
+    showSuccess(input2);
+  }
+}
+
 form.addEventListener('submit', (e) => {
   e.preventDefault();
 
   checkRequired([username, email, password, password2]);
+  checkLength(username, 3, 15);
+  checkLength(password, 6, 25);
+  checkEmail(email);
+  checkPasswordsMatch(password, password2);
 });

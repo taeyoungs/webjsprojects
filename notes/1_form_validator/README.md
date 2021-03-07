@@ -62,3 +62,20 @@ checkRequired([username, email, password, password2]);
 
 - [ ] dark mode
 - [ ] responsive
+
+# 13 Check Length, Email and PasswordsMatch
+
+## log
+
+- check length, email and password match
+
+## tips
+
+## issue
+
+- none
+
+## improving
+
+- [ ] dark mode
+- [ ] responsive
