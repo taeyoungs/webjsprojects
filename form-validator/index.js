@@ -21,28 +21,18 @@ function isValidEmail(email) {
   return re.test(String(email).toLowerCase());
 }
 
+function checkRequired(inputs) {
+  inputs.forEach((input) => {
+    if (input.value === '') {
+      showError(input, `${input.dataset.label}은 필수 항목입니다.`);
+    } else {
+      showSuccess(input);
+    }
+  });
+}
+
 form.addEventListener('submit', (e) => {
   e.preventDefault();
-  if (username.value === '') {
-    showError(username, '이름은 필수 항목입니다.');
-  } else {
-    showSuccess(username);
-  }
-  if (email.value === '') {
-    showError(email, '이메일은 필수 항목입니다.');
-  } else if (!isValidEmail(email.value)) {
-    showError(email, '이메일 형식이 올바르지 않습니다.');
-  } else {
-    showSuccess(email);
-  }
-  if (password.value === '') {
-    showError(password, '비밀번호는 필수 항목입니다.');
-  } else {
-    showSuccess(password);
-  }
-  if (password2.value === '') {
-    showError(password2, '비밀번호 확인은 필수 항목입니다..');
-  } else {
-    showSuccess(password2);
-  }
+
+  checkRequired([username, email, password, password2]);
 });
