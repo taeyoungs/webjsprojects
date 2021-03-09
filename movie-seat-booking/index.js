@@ -34,13 +34,57 @@ const moive = document.getElementById('movie');
 const price = document.getElementById('price');
 const count = document.getElementById('count');
 
-let selectedMovie = movie1;
+let selectedMovie = localStorage.getItem('selectedMovie')
+  ? setMovie(localStorage.getItem('selectedMovie'))
+  : movie1;
 let ticketPrice = movie.value;
+console.log(selectedMovie);
 
-function setMovieData(movieIndex, movieValue) {
+function setMovieData(movieIndex, movieValue, movieSrc) {
   localStorage.setItem('selectedMovie', movieIndex);
   localStorage.setItem('selectedValue', movieValue);
+  localStorage.setItem('selectedMoviePoster', movieSrc);
   localStorage.setItem('selectedIndex', JSON.stringify([]));
+}
+
+function setMovie(index) {
+  if (+index === 0) {
+    return movie1;
+  } else if (+index === 1) {
+    return movie2;
+  } else if (+index === 2) {
+    return movie3;
+  } else {
+    return movie4;
+  }
+}
+
+function setPoster(src) {
+  poster.src = 'https://image.tmdb.org/t/p/w500/' + src;
+}
+
+function populateUI() {
+  const selectedSeats = JSON.parse(localStorage.getItem('selectedIndex'));
+
+  if (selectedSeats !== null && selectedSeats.length > 0) {
+    const seats = document.querySelectorAll('.row .seat:not(.occupied)');
+    // console.log(seats);
+    seats.forEach((seat, index) => {
+      if (selectedSeats.indexOf(index) > -1) {
+        seat.classList.add('selected');
+      }
+    });
+  }
+
+  const selectedMovieIndex = localStorage.getItem('selectedMovie');
+  if (selectedMovieIndex != null) {
+    movie.selectedIndex = selectedMovieIndex;
+  }
+
+  const selectedMoviePoster = localStorage.getItem('selectedMoviePoster');
+  if (selectedMoviePoster !== null) {
+    poster.src = 'https://image.tmdb.org/t/p/w500/' + selectedMoviePoster;
+  }
 }
 
 // 티켓 가격 업데이트
@@ -83,19 +127,16 @@ function setSeats() {
 movie.addEventListener('change', (e) => {
   const seletedOption = e.target.options[e.target.selectedIndex];
   poster.src = 'https://image.tmdb.org/t/p/w500/' + seletedOption.dataset.src;
-  const m = +seletedOption.dataset.movie;
-  if (m === 1) {
-    selectedMovie = movie1;
-  } else if (m === 2) {
-    selectedMovie = movie2;
-  } else if (m === 3) {
-    selectedMovie = movie3;
-  } else {
-    selectedMovie = movie4;
-  }
-  setMovieData(m, e.target.value);
+  console.log(e.target.selectedIndex);
+  selectedMovie = setMovie(e.target.selectedIndex);
+  setMovieData(
+    e.target.selectedIndex,
+    e.target.value,
+    seletedOption.dataset.src
+  );
 
   setSeats();
+  updateTicketPrice();
 });
 
 container.addEventListener('click', (e) => {
@@ -110,3 +151,5 @@ container.addEventListener('click', (e) => {
 });
 
 setSeats();
+populateUI();
+updateTicketPrice();
