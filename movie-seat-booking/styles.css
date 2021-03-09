@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap');
+
+:root {
+  --bg-color: #000;
+  --font-color: #fff;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: 'Nanum Gothic';
+}
+
+body {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: var(--bg-color);
+  color: var(--font-color);
+  margin: 0px;
+}
+
+.poster-container {
+  margin-right: 40px;
+}
+
+.poster {
+  width: 300px;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.movie-container {
+  margin-bottom: 20px;
+}
+
+.movie-container select {
+  border: 0;
+  border-radius: 5px;
+  padding: 5px 10px;
+  outline: 0;
+  font-size: 13px;
+  margin-left: 10px;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.showcase {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 10px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.showcase li {
+  display: flex;
+  align-items: center;
+  margin: 0px 10px;
+  color: grey;
+  font-size: 14px;
+}
+
+.showcase li small {
+  margin-left: 2px;
+}
+
+.row {
+  display: flex;
+}
+
+.seat-container {
+  margin-bottom: 20px;
+  perspective: 1000px;
+}
+
+.seat {
+  background-color: #444451;
+  height: 13px;
+  width: 16px;
+  margin: 3px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.seat:nth-of-type(2) {
+  margin-right: 10px;
+}
+
+.seat:nth-of-type(7) {
+  margin-left: 10px;
+}
+
+.seat:not(.occupied):hover {
+  transform: scale(1.5);
+  cursor: pointer;
+}
+
+.seat.selected {
+  background-color: #f1c40f;
+}
+
+.seat.occupied {
+  background-color: white;
+}
+
+.showcase .seat:not(.occupied):hover {
+  transform: scale(1);
+  cursor: default;
+}
+
+.screen {
+  background: #fff;
+  height: 70px;
+  width: 100%;
+  margin: 15px 0px;
+  transform: rotateX(-45deg);
+  box-shadow: 0px 3px 10px rgba(255, 255, 255, 0.7);
+}
+
+.total {
+  font-size: 14px;
+}
+
+.total span {
+  color: #f1c40f;
+}
