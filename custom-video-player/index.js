@@ -24,17 +24,28 @@ function updatePlayIcon() {
   }
 }
 
-function updateProgress() {
-  return true;
-}
-
 function stopVideo() {
   video.currentTime = 0;
   video.pause();
 }
 
-function setVideoProgress() {
-  return true;
+function updateProgress() {
+  progress.value = (+video.currentTime / video.duration) * 100;
+
+  let min = Math.floor(+video.currentTime / 60);
+  if (min < 10) {
+    min = '0' + String(min);
+  }
+  let sec = Math.floor(+video.currentTime % 60);
+  if (sec < 10) {
+    sec = '0' + String(sec);
+  }
+
+  timestamp.innerHTML = `${min}:${sec}`;
+}
+
+function setVideoProgress(e) {
+  video.currentTime = (+e.target.value * video.duration) / 100;
 }
 
 video.addEventListener('click', toggleVideoStatus);
@@ -46,4 +57,4 @@ play.addEventListener('click', toggleVideoStatus);
 
 stopBtn.addEventListener('click', stopVideo);
 
-progress.addEventListener('change', setVideoProgress);
+progress.addEventListener('click', setVideoProgress);
