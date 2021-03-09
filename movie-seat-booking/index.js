@@ -37,10 +37,23 @@ const count = document.getElementById('count');
 let selectedMovie = movie1;
 let ticketPrice = movie.value;
 
+function setMovieData(movieIndex, movieValue) {
+  localStorage.setItem('selectedMovie', movieIndex);
+  localStorage.setItem('selectedValue', movieValue);
+  localStorage.setItem('selectedIndex', JSON.stringify([]));
+}
+
 // 티켓 가격 업데이트
 function updateTicketPrice() {
   ticketPrice = +movie.value;
   const selectedSeats = seatContainer.querySelectorAll('.row .seat.selected');
+  const seats = document.querySelectorAll('.row .seat:not(.occupied)');
+
+  const selectedSeatsIndex = [...selectedSeats].map((seat) =>
+    [...seats].indexOf(seat)
+  );
+  localStorage.setItem('selectedIndex', JSON.stringify(selectedSeatsIndex));
+
   count.innerText = selectedSeats.length;
   price.innerText = selectedSeats.length * ticketPrice;
 }
@@ -80,6 +93,8 @@ movie.addEventListener('change', (e) => {
   } else {
     selectedMovie = movie4;
   }
+  setMovieData(m, e.target.value);
+
   setSeats();
 });
 
@@ -89,8 +104,9 @@ container.addEventListener('click', (e) => {
     !e.target.classList.contains('occupied')
   ) {
     e.target.classList.toggle('selected');
+
+    updateTicketPrice();
   }
-  updateTicketPrice();
 });
 
 setSeats();

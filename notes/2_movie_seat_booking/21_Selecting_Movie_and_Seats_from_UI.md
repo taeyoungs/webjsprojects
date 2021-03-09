@@ -2,6 +2,9 @@
 
 ## log
 
+- toggle 가능한 좌석 배치도
+- 영화 option 변경에 따른 좌석 및 포스터 재배치
+
 ## tips
 
 - string 형태의 number 값에 '+'를 붙이는 것으로도 parseInt 처럼 사용할 수 있다.
