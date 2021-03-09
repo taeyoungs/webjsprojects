@@ -10,7 +10,7 @@
   <body>
     <div class="poster-container">
       <img
-        src="https://image.tmdb.org/t/p/w500/u1L4qxIu5sC2P082uMHYt7Ifvnj.jpg"
+        src="https://image.tmdb.org/t/p/w500/o1a5FULQTObsNbcgjapJtunpFzV.jpg"
         alt="poster"
         class="poster"
       />
@@ -19,10 +19,34 @@
       <div class="movie-container">
         <label>영화를 골라주세요:</label>
         <select id="movie">
-          <option value="10">타짜 (&#8361;10) 38015</option>
-          <option value="8">데자뷰 (&#8361;8) 7551</option>
-          <option value="12">센과 치히로의 행방불명 (&#8361;12) 129</option>
-          <option value="18">터미널 (&#8361;18) 594</option>
+          <option
+            data-movie="1"
+            data-src="o1a5FULQTObsNbcgjapJtunpFzV.jpg"
+            value="10"
+          >
+            타짜 (&#8361;10)
+          </option>
+          <option
+            data-movie="2"
+            data-src="3SqDOX1TsdTvVLgM0k3dmKLqkLE.jpg"
+            value="8"
+          >
+            데자뷰 (&#8361;8)
+          </option>
+          <option
+            data-movie="3"
+            data-src="u1L4qxIu5sC2P082uMHYt7Ifvnj.jpg"
+            value="12"
+          >
+            센과 치히로의 행방불명 (&#8361;12)
+          </option>
+          <option
+            data-movie="4"
+            data-src="6BGzYTpKGsMiFwJUUJj1sE7JoXj.jpg"
+            value="18"
+          >
+            터미널 (&#8361;18)
+          </option>
         </select>
       </div>
       <ul class="showcase">
@@ -45,8 +69,10 @@
       </div>
 
       <p class="total">
-        현재 <span>0</span>개의 좌석을 선택하셨고 가격은
-        &#8361;<span>0</span>원입니다.
+        현재 <span id="count">0</span>개의 좌석을 선택하셨고 가격은 &#8361;<span
+          id="price"
+          >0</span
+        >원입니다.
       </p>
     </div>
 
