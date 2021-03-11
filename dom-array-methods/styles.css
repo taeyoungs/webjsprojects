@@ -45,6 +45,7 @@ aside button {
   cursor: pointer;
   transition: box-shadow 0.3s;
   font-size: 13px;
+  outline: none;
 }
 
 aside button:hover {
@@ -63,8 +64,15 @@ h2 {
   justify-content: space-between;
   font-weight: 300;
   margin: 0 0 20px;
-  font-size: 20px;
   padding: 0px 5px 10px 5px;
+}
+
+.person {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  font-weight: 300;
+  padding: 0px 5px;
 }
 
 h3 {
