@@ -5,7 +5,7 @@ const showMillionairesBtn = document.getElementById('show-millionaires');
 const sortBtn = document.getElementById('sort');
 const calculateWealthBtn = document.getElementById('calculate-wealth');
 
-const data = [];
+let data = [];
 
 async function getRandomUser() {
   const res = await fetch('https://randomuser.me/api');
@@ -13,10 +13,46 @@ async function getRandomUser() {
 
   const newUser = {
     name: `${data.results[0].name.first} ${data.results[0].name.last}`,
-    wealth: Math.floor(Math.random() * 10000000),
+    wealth: Math.floor(Math.random() * 1000000),
   };
 
   addUser(newUser);
+}
+
+function doubleMoney() {
+  data = data.map((user) => {
+    return { ...user, wealth: user.wealth * 2 };
+  });
+
+  updateDOM();
+}
+
+function sortByRichest() {
+  data = data.sort((a, b) => b.wealth - a.wealth);
+
+  updateDOM();
+}
+
+// function showMillionaires
+function showMillionaires() {
+  data = data.filter((user) => user.wealth > 1000000);
+
+  updateDOM();
+}
+
+function calculateWealth() {
+  const sum = data.reduce((acc, user) => (acc += user.wealth), 0);
+
+  const wealth = document.createElement('div');
+  wealth.classList.add('total');
+  wealth.innerHTML = `<h3>재산 합계: <strong>${formatNumber(
+    sum
+  )}</strong></h3>`;
+  const temp = main.querySelector('.total');
+  if (temp) {
+    main.removeChild(temp);
+  }
+  main.appendChild(wealth);
 }
 
 function addUser(newUser) {
@@ -41,6 +77,9 @@ function formatNumber(number) {
 }
 
 addUserBtn.addEventListener('click', getRandomUser);
+doubleBtn.addEventListener('click', doubleMoney);
+showMillionairesBtn.addEventListener('click', showMillionaires);
+calculateWealthBtn.addEventListener('click', calculateWealth);
 
 getRandomUser();
 getRandomUser();
