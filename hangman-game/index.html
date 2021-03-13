@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Hangman</h1>
+    <p>Find the hidden word - Enter a letter</p>
+    <div class="game-container">
+      <svg width="200" height="250" class="figure-container">
+        <line x1="60" y1="20" x2="140" y2="20" />
+        <line x1="140" y1="20" x2="140" y2="50" />
+        <line x1="60" y1="20" x2="60" y2="230" />
+        <line x1="30" y1="230" x2="90" y2="230" />
+
+        <!-- 머리 -->
+        <circle cx="140" cy="70" r="20" class="figure-part" />
+        <!-- 몸 -->
+        <line x1="140" y1="90" x2="140" y2="150" class="figure-part" />
+        <!-- 팔 -->
+        <line x1="110" y1="100" x2="140" y2="120" class="figure-part" />
+        <line x1="170" y1="100" x2="140" y2="120" class="figure-part" />
+        <!-- 다리 -->
+        <line x1="110" y1="180" x2="140" y2="150" class="figure-part" />
+        <line x1="170" y1="180" x2="140" y2="150" class="figure-part" />
+      </svg>
+
+      <div class="word" id="word"></div>
+      <div class="wrong-letter-container">
+        <div class="wrong-letters">
+          <div class="row">
+            <span class="keyboard">Q</span>
+            <span class="keyboard">W</span>
+            <span class="keyboard">E</span>
+            <span class="keyboard">R</span>
+            <span class="keyboard">T</span>
+            <span class="keyboard">Y</span>
+            <span class="keyboard">U</span>
+            <span class="keyboard">I</span>
+            <span class="keyboard">O</span>
+            <span class="keyboard">P</span>
+          </div>
+          <div class="row">
+            <span class="keyboard">A</span>
+            <span class="keyboard">S</span>
+            <span class="keyboard">D</span>
+            <span class="keyboard">F</span>
+            <span class="keyboard">G</span>
+            <span class="keyboard">H</span>
+            <span class="keyboard">J</span>
+            <span class="keyboard">K</span>
+            <span class="keyboard">L</span>
+          </div>
+          <div class="row">
+            <span class="keyboard">Z</span>
+            <span class="keyboard">X</span>
+            <span class="keyboard">C</span>
+            <span class="keyboard">V</span>
+            <span class="keyboard">B</span>
+            <span class="keyboard">N</span>
+            <span class="keyboard">M</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="popup-container" id="popup-container">
+      <div class="popup">
+        <h2 id="final-message"></h2>
+        <button id="play-button">Play Again</button>
+      </div>
+    </div>
+
+    <div class="notification-container" id="notification-container">
+      <p>You have already entered this letter</p>
+    </div>
+
+    <script src="./index.js"></script>
+  </body>
+</html>
