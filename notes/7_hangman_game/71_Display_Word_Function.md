@@ -1,17 +1,3 @@
-# 70 Add HTML and CSS
-
-## log
-
-- add html and css
-
-## tips
-
-## issue
-
-- none
-
-## improving
-
 # 71 Display Word Functoion
 
 ## log
