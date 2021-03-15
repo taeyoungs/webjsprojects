@@ -1,8 +1,8 @@
-# 70 Add HTML and CSS
+# 80 Add HTML and Base CSS
 
 ## log
 
-- add html & css
+- add html & base css
 
 ## tips
 
