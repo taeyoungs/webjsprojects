@@ -39,9 +39,65 @@ function searchMeals(e) {
     alertMsg.classList.add('show');
     setTimeout(() => alertMsg.classList.remove('show'), 1500);
   }
+  search.value = '';
 }
 
 submit.addEventListener('submit', searchMeals);
+
+function addMealToDom(meal) {
+  const ingredients = [];
+
+  for (let i = 1; i <= 20; i++) {
+    if (meal[`strIngredient${i}`]) {
+      ingredients.push(
+        `${meal[`strIngredient${i}`]} - ${meal[`strMeasure${i}`]}`
+      );
+    } else {
+      break;
+    }
+  }
+  singleMeal.style.display = 'block';
+  singleMeal.innerHTML = `
+      <div class="single-meal-container">
+          <div class="close">
+              <i class="fas fa-times"></i>
+          </div>
+          <h1>${meal.strMeal}</h1>
+          <img src="${meal.strMealThumb}" alt="${meal.strMeal}" />
+          <div class="single-meal-info">
+              <p>
+              ${meal.strCategory ? `${meal.strCategory} ` : ''}
+              ${meal.strCategory && meal.strArea && '/'}
+              ${meal.strArea ? `${meal.strArea}` : ''}
+              </p>
+          </div>
+          <div class="single-meal-instructions">
+              <p>${meal.strInstructions}</p>
+              <h2>재료</h2>
+              <ul>
+              ${ingredients
+                .map(
+                  (ign) => `
+                  <li>${ign}</li>
+              `
+                )
+                .join('')}
+              </ul>
+          </div>
+      </div>
+    `;
+  document.body.style.overflowY = 'hidden';
+}
+
+function getRandomMealRecipe() {
+  fetch(`https://www.themealdb.com/api/json/v1/1/random.php`)
+    .then((res) => res.json())
+    .then((data) => {
+      const meal = data.meals[0];
+
+      addMealToDom(meal);
+    });
+}
 
 function getSingleMealRecipe(id) {
   fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
@@ -49,49 +105,8 @@ function getSingleMealRecipe(id) {
     .then((data) => {
       const meal = data.meals[0];
 
-      const ingredients = [];
-
-      for (let i = 1; i <= 20; i++) {
-        if (meal[`strIngredient${i}`]) {
-          ingredients.push(
-            `${meal[`strIngredient${i}`]} - ${meal[`strMeasure${i}`]}`
-          );
-        } else {
-          break;
-        }
-      }
-      singleMeal.style.display = 'block';
-      singleMeal.innerHTML = `
-        <div class="single-meal-container">
-            <div class="close">
-                <i class="fas fa-times"></i>
-            </div>
-            <h1>${meal.strMeal}</h1>
-            <img src="${meal.strMealThumb}" alt="${meal.strMeal}" />
-            <div class="single-meal-info">
-                <p>
-                ${meal.strCategory ? `${meal.strCategory} ` : ''}
-                ${meal.strCategory && meal.strArea && '/'}
-                ${meal.strArea ? `${meal.strArea}` : ''}
-                </p>
-            </div>
-            <div class="single-meal-instructions">
-                <p>${meal.strInstructions}</p>
-                <h2>재료</h2>
-                <ul>
-                ${ingredients
-                  .map(
-                    (ign) => `
-                    <li>${ign}</li>
-                `
-                  )
-                  .join('')}
-                </ul>
-            </div>
-        </div>
-      `;
+      addMealToDom(meal);
     });
-  document.body.style.overflowY = 'hidden';
 }
 
 meals.addEventListener('click', (e) => {
@@ -119,3 +134,5 @@ singleMeal.addEventListener('click', (e) => {
     document.body.style.overflowY = 'auto';
   }
 });
+
+random.addEventListener('click', getRandomMealRecipe);
