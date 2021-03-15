@@ -13,6 +13,7 @@
   </head>
   <body>
     <div class="container">
+      <div class="alert" id="alert">빈 문자열로는 검색하실 수 없습니다.</div>
       <h1>레시피 찾기</h1>
       <div class="flex">
         <form class="flex" id="submit">
@@ -22,18 +23,18 @@
             id="search"
             placeholder="원하시는 음식을 입력해주세요."
           />
-          <button type="submit" class="search-btn">
+          <button type="submit" class="search-btn" id="search">
             <i class="fas fa-search"></i>
           </button>
         </form>
-        <button class="random-btn">
+        <button class="random-btn" id="random">
           <i class="fas fa-random"></i>
         </button>
       </div>
 
       <div id="result-heading"></div>
       <div class="meals" id="meals"></div>
-      <div id="single-meals"></div>
+      <div id="single-meal"></div>
     </div>
     <script src="index.js"></script>
   </body>

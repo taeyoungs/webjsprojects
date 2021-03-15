@@ -1,17 +1,3 @@
-# 80 Add HTML and Base CSS
-
-## log
-
-- add html & base css
-
-## tips
-
-## issue
-
-- none
-
-## improving
-
 # 81 Search & Display Meals From API
 
 ## log
