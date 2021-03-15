@@ -42,3 +42,80 @@ function searchMeals(e) {
 }
 
 submit.addEventListener('submit', searchMeals);
+
+function getSingleMealRecipe(id) {
+  fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
+    .then((res) => res.json())
+    .then((data) => {
+      const meal = data.meals[0];
+
+      const ingredients = [];
+
+      for (let i = 1; i <= 20; i++) {
+        if (meal[`strIngredient${i}`]) {
+          ingredients.push(
+            `${meal[`strIngredient${i}`]} - ${meal[`strMeasure${i}`]}`
+          );
+        } else {
+          break;
+        }
+      }
+      singleMeal.style.display = 'block';
+      singleMeal.innerHTML = `
+        <div class="single-meal-container">
+            <div class="close">
+                <i class="fas fa-times"></i>
+            </div>
+            <h1>${meal.strMeal}</h1>
+            <img src="${meal.strMealThumb}" alt="${meal.strMeal}" />
+            <div class="single-meal-info">
+                <p>
+                ${meal.strCategory ? `${meal.strCategory} ` : ''}
+                ${meal.strCategory && meal.strArea && '/'}
+                ${meal.strArea ? `${meal.strArea}` : ''}
+                </p>
+            </div>
+            <div class="single-meal-instructions">
+                <p>${meal.strInstructions}</p>
+                <h2>재료</h2>
+                <ul>
+                ${ingredients
+                  .map(
+                    (ign) => `
+                    <li>${ign}</li>
+                `
+                  )
+                  .join('')}
+                </ul>
+            </div>
+        </div>
+      `;
+    });
+  document.body.style.overflowY = 'hidden';
+}
+
+meals.addEventListener('click', (e) => {
+  const mealInfo = e.path.find((item) => {
+    if (item.classList) {
+      return item.classList.contains('meal-info') && item;
+    } else {
+      return false;
+    }
+  });
+  if (mealInfo) {
+    getSingleMealRecipe(mealInfo.dataset.id);
+  }
+});
+
+singleMeal.addEventListener('click', (e) => {
+  if (e.target.classList) {
+    if (e.target.classList.contains('fa-times')) {
+      singleMeal.style.display = 'none';
+      document.body.style.overflowY = 'auto';
+    }
+  }
+  if (e.target === e.currentTarget) {
+    singleMeal.style.display = 'none';
+    document.body.style.overflowY = 'auto';
+  }
+});
