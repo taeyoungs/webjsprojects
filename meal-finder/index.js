@@ -15,14 +15,17 @@ function searchMeals(e) {
     fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${term}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.meals);
         if (data.meals) {
           resultHeading.innerHTML = `<p>총 ${data.meals.length}개의 '${term}' 레시피가 존재합니다. </p>`;
           meals.innerHTML = data.meals
             .map(
-              (meal) => `
+              (meal, index) => `
             <figure class="meal">
-                <img src="${meal.strMealThumb}" alt="${meal.strMeal}" />
+                ${
+                  index > 15
+                    ? `<img class="lazy" data-src="${meal.strMealThumb}" alt="${meal.strMeal}" />`
+                    : `<img src="${meal.strMealThumb}" alt="${meal.strMeal}" />`
+                }
                 <div class="meal-info" data-id="${meal.idMeal}">
                     <h3>${meal.strMeal}</h3>
                 </div>
@@ -30,6 +33,25 @@ function searchMeals(e) {
           `
             )
             .join('');
+
+          if ('IntersectionObserver' in window) {
+            let lazyImages = document.querySelectorAll('.lazy');
+
+            const imageObserver = new IntersectionObserver(
+              (entries, observer) => {
+                entries.forEach((entry) => {
+                  if (entry.isIntersecting) {
+                    const image = entry.target;
+                    image.src = image.dataset.src;
+                    image.classList.remove('lazy');
+                    imageObserver.unobserve(image);
+                  }
+                });
+              }
+            );
+
+            lazyImages.forEach((img) => imageObserver.observe(img));
+          }
         } else {
           resultHeading.innerHTML = `<p>검색 결과가 존재하지 않습니다. 😥</p><p>다른 키워드로 검색해주세요.</p>`;
         }
