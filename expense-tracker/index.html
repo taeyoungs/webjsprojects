@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Expense Tracker</title>
+  </head>
+  <body>
+    <h2>가계부</h2>
+
+    <div class="container">
+      <h4>총 금액</h4>
+      <h1 id="balance">$0.00</h1>
+
+      <div class="inc-exp-container">
+        <div>
+          <h4>수입</h4>
+          <p id="money-plus" class="money plus">+$0.00</p>
+        </div>
+        <div>
+          <h4>지출</h4>
+          <p id="money-minus" class="money minus">-$0.00</p>
+        </div>
+      </div>
+
+      <h3>내역</h3>
+      <ul id="list" class="list">
+        <li class="minus">
+          현금<span>-$400</span><button class="delete-btn">삭제</button>
+        </li>
+      </ul>
+
+      <h3>수입/지출 정보 입력하기</h3>
+      <form id="form">
+        <div class="form-control">
+          <label for="text">내역</label>
+          <input type="text" id="text" placeholder="내역 정보를 적어주세요." />
+        </div>
+        <div class="form-control">
+          <label for="amount">금액 (지출 - , 수입 + )</label>
+          <input
+            type="number"
+            id="amount"
+            placeholder="금액 정보를 적어주세요."
+          />
+        </div>
+        <button class="btn">저장하기</button>
+      </form>
+    </div>
+    <script src="index.js"></script>
+  </body>
+</html>
