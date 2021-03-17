@@ -15,12 +15,15 @@ function uuidv4() {
   );
 }
 
-let dummy = [
-  { id: uuidv4(), type: '현금', amount: 12000 },
-  { id: uuidv4(), type: '마우스', amount: -6000 },
-  { id: uuidv4(), type: '용돈', amount: 3000 },
-  { id: uuidv4(), type: '키보드', amount: -1000 },
-];
+const localStorageTransactions = JSON.parse(
+  localStorage.getItem('transactions')
+);
+
+let transactions = localStorageTransactions || [];
+
+function saveTransactions() {
+  localStorage.setItem('transactions', JSON.stringify(transactions));
+}
 
 function addTransactionDOM(transaction) {
   const sign = transaction.amount > 0 ? '+' : '-';
@@ -44,16 +47,19 @@ function addTransactionDOM(transaction) {
 }
 
 function updateValue() {
-  const amounts = dummy.reduce((acc, current) => acc + current.amount, 0);
+  const amounts = transactions.reduce(
+    (acc, current) => acc + current.amount,
+    0
+  );
 
-  const income = dummy.reduce(
+  const income = transactions.reduce(
     (acc, current) => (current.amount > 0 ? acc + current.amount : acc),
     0
   );
 
   const outcome =
     -1 *
-    dummy.reduce(
+    transactions.reduce(
       (acc, current) => (current.amount < 0 ? acc + current.amount : acc),
       0
     );
@@ -64,7 +70,9 @@ function updateValue() {
 }
 
 function removeTransaction(id) {
-  dummy = dummy.filter((item) => item.id !== id);
+  transactions = transactions.filter((item) => item.id !== id);
+
+  saveTransactions();
 
   init();
 }
@@ -72,7 +80,7 @@ function removeTransaction(id) {
 function init() {
   list.innerHTML = '';
 
-  dummy.forEach((item) => addTransactionDOM(item));
+  transactions.forEach((item) => addTransactionDOM(item));
 
   updateValue();
 }
@@ -86,9 +94,13 @@ form.addEventListener('submit', (e) => {
     amount: +amount.value,
   };
 
-  dummy.push(item);
+  transactions.push(item);
+
   addTransactionDOM(item);
+
   updateValue();
+
+  saveTransactions();
 
   text.value = '';
   amount.value = '';
