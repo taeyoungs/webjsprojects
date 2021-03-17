@@ -125,8 +125,9 @@ input[type='number'] {
   border: 0;
   background-color: #00a8ff;
   color: #fff;
-  margin: 20px 0 0;
+  margin: 20px 0 20px;
   padding: 10px 0;
+  cursor: pointer;
 }
 
 .delete-btn {
@@ -143,4 +144,9 @@ input[type='number'] {
   transition: opacity 0.3s;
   z-index: 5;
   cursor: pointer;
+}
+
+button:focus,
+input:focus {
+  outline: none;
 }
