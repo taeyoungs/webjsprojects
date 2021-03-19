@@ -13,6 +13,7 @@ const nextBtn = document.getElementById('next');
 const year = document.getElementById('year');
 const month = document.getElementById('month');
 const calendarBtn = document.getElementById('calendar-btn');
+const daysContainer = document.querySelector('.days-container');
 const calender = new Calendar();
 
 function uuidv4() {
@@ -25,10 +26,11 @@ function uuidv4() {
 }
 
 const dummy = [
-  { id: uuidv4(), type: '도서', amount: 2000, date: new Date('2020-04-20') },
-  { id: uuidv4(), type: '과자', amount: -1000, date: new Date('2021-01-11') },
-  { id: uuidv4(), type: '용돈', amount: 5000, date: new Date('2019-08-30') },
   { id: uuidv4(), type: '로또', amount: -500, date: new Date('2021-02-08') },
+  { id: uuidv4(), type: '과자', amount: -1000, date: new Date('2021-01-11') },
+  { id: uuidv4(), type: '현금', amount: 3000, date: new Date('2021-01-12') },
+  { id: uuidv4(), type: '도서', amount: 2000, date: new Date('2020-04-20') },
+  { id: uuidv4(), type: '용돈', amount: 5000, date: new Date('2019-08-30') },
   { id: uuidv4(), type: '공책', amount: -1200, date: new Date('2018-10-22') },
 ];
 
@@ -53,7 +55,7 @@ function removeTransaction(id) {
 
   saveTransactions();
 
-  init();
+  init(transactions);
 }
 
 function addTransactionDOM(transaction) {
@@ -129,10 +131,10 @@ filter.addEventListener('change', (e) => {
         +(new Date(b.date) > new Date(a.date)) - 1
     );
   }
-  init();
+  init(transactions);
 });
 
-function init() {
+function init(transactions) {
   list.innerHTML = '';
 
   transactions.forEach((item) => addTransactionDOM(item));
@@ -162,6 +164,22 @@ form.addEventListener('submit', (e) => {
   amount.value = '';
 });
 
+function filteredInit() {
+  const filtered = transactions.filter((value) => {
+    const date = new Date(value.date);
+    console.log(date.getDate());
+    if (
+      date.getMonth() + 1 === calender.month &&
+      date.getFullYear() === calender.year
+    ) {
+      return value;
+    }
+  });
+
+  updateValue();
+  init(filtered);
+}
+
 prevBtn.addEventListener('click', () => {
   let y = +year.innerText;
   let m = +month.innerText;
@@ -175,6 +193,8 @@ prevBtn.addEventListener('click', () => {
     m -= 1;
   }
   calender.setState(y, m);
+
+  filteredInit();
 });
 
 nextBtn.addEventListener('click', () => {
@@ -190,14 +210,16 @@ nextBtn.addEventListener('click', () => {
     m += 1;
   }
   calender.setState(y, m);
+
+  filteredInit();
 });
 
 calendarBtn.addEventListener('click', () => {
   const container = document.querySelector('.calendar-container');
-
+  let filtered = [];
   if (!container.classList.contains('show')) {
     container.classList.add('show');
-    transactions = transactions.filter((value) => {
+    filtered = transactions.filter((value) => {
       const date = new Date(value.date);
       if (
         date.getMonth() + 1 === calender.month &&
@@ -208,10 +230,31 @@ calendarBtn.addEventListener('click', () => {
     });
   } else {
     container.classList.remove('show');
-    transactions = localStorageTransactions || [];
+    filtered = transactions;
   }
 
-  init();
+  init(filtered);
 });
 
-init();
+daysContainer.addEventListener('click', (e) => {
+  const day = e.target;
+  let filtered = [];
+  if (day.classList.contains('day')) {
+    const d = +day.innerText;
+    filtered = transactions.filter((value) => {
+      const date = new Date(value.date);
+      console.log(date.getDate());
+      if (
+        date.getMonth() + 1 === calender.month &&
+        date.getFullYear() === calender.year &&
+        date.getDate() === d
+      ) {
+        return value;
+      }
+    });
+  }
+
+  init(filtered);
+});
+
+init(transactions);
