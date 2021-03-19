@@ -25,7 +25,16 @@
         </div>
       </div>
 
-      <h3>내역</h3>
+      <h3 class="filter-container">
+        내역
+        <button class="calendar-btn" id="calendar-btn">달력 표시</button>
+        <select id="filter" class="filter">
+          <option value="highest">금액 높은 순으로 정렬</option>
+          <option value="lowest">금액 낮은 순으로 정렬</option>
+          <option value="recently" selected>최근 일자 순으로 정렬</option>
+          <option value="older">오래된 순으로 정렬</option>
+        </select>
+      </h3>
       <ul id="list" class="list"></ul>
 
       <h3>수입/지출 정보 입력하기</h3>
@@ -45,6 +54,19 @@
         <button class="btn">저장하기</button>
       </form>
     </div>
-    <script src="index.js"></script>
+    <aside class="calendar-container">
+      <div class="calendar" id="calendar">
+        <h2 style="text-align: center">달력</h2>
+        <div class="control">
+          <button class="arrow" id="prev">◀</button>
+          <div class="date">
+            <span id="year">2021</span>년 <span id="month">3</span>월
+          </div>
+          <button class="arrow" id="next">▶</button>
+        </div>
+        <div class="days-container" id="days-container"></div>
+      </div>
+    </aside>
+    <script type="module" src="index.js"></script>
   </body>
 </html>

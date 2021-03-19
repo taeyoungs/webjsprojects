@@ -20,6 +20,6 @@ function saveTransactions() {
 
 ## improving
 
-- [ ] filter 버튼 만들기
+- [x] filter 버튼 만들기
 - [ ] transaction에 date 정보를 추가하여 월별, 주별로 filtering 되도록 만들기
 - [ ] 년, 월, 일 선택 버튼 만들기
