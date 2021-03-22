@@ -73,6 +73,10 @@ body {
   }
 }
 
+.navigation {
+  z-index: 5;
+}
+
 .action-btn {
   background-color: #fff;
   border: 0;
