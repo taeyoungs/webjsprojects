@@ -7,15 +7,28 @@ const cover = document.getElementById('cover');
 const prevBtn = document.getElementById('prev');
 const playBtn = document.getElementById('play');
 const nextBtn = document.getElementById('next');
+const progressTime = document.getElementById('progress-time');
+const playlist = document.getElementById('playlist');
 
 const songs = ['hey', 'summer', 'ukulele'];
 
 let songIndex = 2;
 
+function setPlaylist() {
+  playlist.innerHTML = songs
+    .map(
+      (song, index) => `
+        <li class="song ${index === songIndex && 'selected'}">${song}</li>
+    `
+    )
+    .join('');
+}
+
 function loadSong(song) {
   title.innerText = song;
   audio.src = `music/${song}.mp3`;
   cover.src = `images/${song}.jpg`;
+  setPlaylist();
 }
 
 function playSong() {
@@ -63,6 +76,28 @@ function prevSong() {
 function updateProgress(e) {
   const { duration, currentTime } = e.srcElement;
   const percent = (currentTime / duration) * 100;
+
+  let min = Math.floor(currentTime / 60);
+  if (min < 10) {
+    min = '0' + String(min);
+  }
+  let sec = Math.floor(currentTime % 60);
+  if (sec < 10) {
+    sec = '0' + String(sec);
+  }
+
+  const durationMin =
+    Math.floor(duration / 60) < 10
+      ? '0' + String(Math.floor(duration / 60))
+      : Math.floor(duration / 60);
+  const durationSec =
+    Math.floor(duration % 60) < 10
+      ? '0' + String(Math.floor(duration % 60))
+      : Math.floor(duration % 60);
+
+  progressTime.innerHTML = `${min}:${sec} / ${
+    durationMin ? durationMin : '00'
+  }:${durationSec ? durationSec : '00'}`;
 
   progress.style.width = `${percent}%`;
 }
