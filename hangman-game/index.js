@@ -98,6 +98,7 @@ playBtn.addEventListener('click', () => {
   wrongLetters.splice(0);
 
   keys.forEach((key) => (key.style.backgroundColor = '#fff'));
+  figureParts.forEach((part) => (part.style.display = 'none'));
 
   getRandomWord();
 
