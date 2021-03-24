@@ -47,6 +47,20 @@ function showLoading() {
   }, 1000);
 }
 
+function showLoading() {
+  if (isLoading) return;
+
+  page++;
+  isLoading = true;
+  loader.classList.add('show');
+
+  setTimeout(() => {
+    showPosts();
+    loader.classList.remove('show');
+    isLoading = false;
+  }, 1000);
+}
+
 window.addEventListener('scroll', () => {
   const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
 
@@ -54,5 +68,7 @@ window.addEventListener('scroll', () => {
     showLoading();
   }
 });
+
+filter.addEventListener('input', filterPosts);
 
 showPosts();
