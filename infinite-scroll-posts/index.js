@@ -1,8 +1,10 @@
 const postsContainer = document.querySelector('.posts-container');
 const loader = document.querySelector('.loader');
+const filter = document.getElementById('filter');
 
-let limit = 3;
+let limit = 5;
 let page = 1;
+let isLoading = false;
 
 async function getPosts() {
   const res = await fetch(
@@ -30,5 +32,27 @@ async function showPosts() {
     postsContainer.appendChild(postEl);
   });
 }
+
+function showLoading() {
+  if (isLoading) return;
+
+  page++;
+  isLoading = true;
+  loader.classList.add('show');
+
+  setTimeout(() => {
+    showPosts();
+    loader.classList.remove('show');
+    isLoading = false;
+  }, 1000);
+}
+
+window.addEventListener('scroll', () => {
+  const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+
+  if (scrollTop + clientHeight >= scrollHeight - 5) {
+    showLoading();
+  }
+});
 
 showPosts();
